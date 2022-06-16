@@ -2,13 +2,17 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "type": "module",
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
+  },
   "description": "[![Actions Status](https://github.com/Julia6996/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/Julia6996/frontend-project-lvl2/actions)",
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
   "main": "bin/gendiff.js",
   "scripts": {
-    "test": "jest"
+    "test": "npx -n --experimental-vm-modules jest"
   },
   "repository": {
     "type": "git",
@@ -21,8 +25,11 @@
   },
   "homepage": "https://github.com/Julia6996/frontend-project-lvl2#readme",
   "dependencies": {
+    "@jest/globals": "^28.1.1",
     "commander": "^9.2.0",
-    "lodash": "^4.17.21"
+    "jest-cli": "^28.1.1",
+    "lodash": "^4.17.21",
+    "npm-check-updates": "^14.0.0"
   },
   "devDependencies": {
     "eslint": "^8.15.0",
