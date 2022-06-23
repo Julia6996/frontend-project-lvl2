@@ -1,34 +1,37 @@
-import getFilePath from './path.js';
+import getFileData from './path.js';
 import _ from 'lodash';
 
 const genDiff = (filepath1, filepath2) => {
-  const file1 = getFilePath(filepath1);
-  const file2 = getFilePath(filepath2);
-  const getKey1 = _.keys(file1);
-  const getKey2 = _.keys(file2);
-  const keysAll = _.union(getKey1, getKey2);
-  keysAll.sort();
+  const firstDataFile = getFileData(filepath1);
+  const secondDataFile = getFileData(filepath2);
+  const getKeyFirstDataFile = _.keys(firstDataFile);
+  const getKeySecondDataFile = _.keys(secondDataFile); 
+  const uniqKeys = _.union(getKeyFirstDataFile, getKeySecondDataFile);
+  uniqKeys.sort();
+
   const result = {};
-  for (let key of keysAll) {
-    if (_.has(file1, key) && !_.has(file2, key)) {
-      result[`- ${key}`] = file1[key];
-    } else if (!_.has(file1, key) && _.has(file2, key)) {
-      result[`+ ${key}`] = file2[key];
+  
+  uniqKeys.forEach((key) => {
+    if (_.has(firstDataFile, key) && !_.has(secondDataFile, key)) {
+      result[`- ${key}`] = firstDataFile[key];
+    } else if (!_.has(firstDataFile, key) && _.has(secondDataFile, key)) {
+      result[`+ ${key}`] = secondDataFile[key];
     } else if (
-      _.has(file1, key) &&
-      _.has(file2, key) &&
-      file1[key] === file2[key]
+      _.has(firstDataFile, key) &&
+      _.has(secondDataFile, key) &&
+      firstDataFile[key] === secondDataFile[key]
     ){
-      result[`  ${key}`] = file1[key];
+      result[`  ${key}`] = firstDataFile[key];
     } else if (
-      _.has(file1, key) &&
-      _.has(file2, key) &&
-      file1[key] !== file2[key]
+      _.has(firstDataFile, key) &&
+      _.has(secondDataFile, key) &&
+      firstDataFile[key] !== secondDataFile[key]
     ){
-      result[`- ${key}`] = file1[key];
-      result[`+ ${key}`] = file2[key];
+      result[`- ${key}`] = firstDataFile[key];
+      result[`+ ${key}`] = secondDataFile[key];
   }
-}
+  })
+
   const resultStringfy = JSON.stringify(result, null, 2);
   return resultStringfy.replace(/"/g, "").replace(/,/g, " ");
 };

@@ -1,10 +1,11 @@
 import { readFileSync } from 'fs';
 import path from 'path';
+import getParser from './parses.js';
 
-const getFilePath = (file) => {
-  const filePath = readFileSync(path.resolve(process.cwd(), file), 'utf-8');
-  const fileConvert = JSON.parse(filePath);
-  return fileConvert;
+const getFileData = (filePath) => {
+const extension = path.extname(filePath);
+const data = (readFileSync(path.resolve(process.cwd(), filePath), 'utf8'));  
+return getParser(data, extension);
 };
 
-export default getFilePath;
+export default getFileData;
