@@ -1,24 +1,26 @@
 import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import path, { dirname } from 'path';
 import fs from 'fs';
 import genDiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const getFixturePath = (filename) => join(__dirname, '..', '__fixtures__', filename);
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
-test('gendiff file test json', () => {
-const expected = fs.readFileSync(getFixturePath('correct-json.txt'), 'utf-8');
+const cases = [
+  // ['file1.json', 'file2.json', 'resultjson.txt', 'json'],
+  ['file1.yaml', 'file2.yaml', 'resultstylish.txt', 'stylish'],
+  ['file1.json', 'file2.json', 'resultstylish.txt', 'stylish'],
+  ['file1.json', 'file2.json', 'resultplain.txt', 'plain'],
+];
 
-const result = genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'));
-expect(result).toEqual(expected);
-});
-
-test('gendiff file test yaml', () => {
-   const expected = fs.readFileSync(getFixturePath('correct-yaml.txt'), 'utf-8');
-
-  const result = genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'));
-  expect(result).toEqual(expected);
+test.each(cases)('Compare %s and %s to expect %s in "%s" style', (firstArg, secondArg, expectedResult, format) => {
+  const firstFile = getFixturePath(firstArg);
+  const secondFile = getFixturePath(secondArg);
+  const getResult = readFile(expectedResult);
+  const result = genDiff(firstFile, secondFile, format);
+  expect(result).toEqual(getResult);
 });
