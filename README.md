@@ -10,9 +10,11 @@
 <ul>
 <li>Make sure you have installed <a href = "https://nodejs.org/en/">Node.js</a> no lower version 12: node -v.</li>
 <li>Clone repository:
+
 ```
 https://github.com/Julia6996/frontend-project-lvl2.git
-```</li>
+```
+</li>
 <li>Change directory to frontend-project-lvl2</li>
 <li>Run the command: 
 
