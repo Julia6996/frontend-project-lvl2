@@ -1,10 +1,9 @@
-
-
 import _ from 'lodash';
 
 const buildTree = (data1, data2) => {
   const keys = Object.keys({ ...data1, ...data2 });
-  const sortedKeys = _.sortBy(keys);
+  const uniqKeys = _.union(keys)
+  const sortedKeys = _.sortBy(uniqKeys);
   return sortedKeys.map((key) => {
     const value1 = data1[key];
     const value2 = data2[key];
@@ -27,4 +26,3 @@ const buildTree = (data1, data2) => {
 };
 
 export default buildTree;
-

@@ -1,4 +1,5 @@
 const indent = (depth, spaceCount = 4) => ' '.repeat(spaceCount * depth - 2);
+
 const stringify = (data, treeDepth) => {
   if (typeof data !== 'object') {
     return `${data}`;
@@ -13,6 +14,7 @@ const stringify = (data, treeDepth) => {
     `${indent(treeDepth)}  }`,
   ].join('\n');
 };
+
 const stylish = (innerTree) => {
   const iter = (tree, depth) => tree.map((node) => {
     const getValue = (value, sign) => `${indent(depth)}${sign} ${node.key}: ${stringify(value, depth)}\n`;

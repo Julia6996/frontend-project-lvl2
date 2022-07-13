@@ -9,7 +9,6 @@ plugins:
 env:
   node: true
   es2020: true
-   browser: true
    jest/globals: true
 root: true
 
